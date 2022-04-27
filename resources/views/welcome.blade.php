@@ -8,5 +8,7 @@
 </head>
 <body>
     <h1>Приветствие</h1>
+    <a href="{{route('news')}}">Все новости</a>
+    <a href="{{route('news.categories')}}">Все категории</a>
 </body>
 </html>
