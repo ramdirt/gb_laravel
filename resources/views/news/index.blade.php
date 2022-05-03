@@ -1,20 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>News</title>
-</head>
-<body>
-    @foreach($newsList as $news)
-        <div style="margin: 20px; padding: 10px; background-color: gray; width: 300px;"  >
-            <img src="{{ $news['image'] }}" alt="" width="200"><br>
-            <a href="{{ route('news.show', ['id' => $news['id']])}}"> {{ $news['title'] }}</a><br>
-            <p>Автор {{$news['author']}}</p><br>
-            <p>{{ $news['description'] }}</p>
+@extends('layouts.layout')
 
+@section('content')
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        @forelse($newsList as $news)
+            <div class="col">
+            <div class="card shadow-sm">
+                <img src="{{ $news['image'] }}" alt="">
+                    <div class="card-body">
+                    <p><a href="{{ route('news.show', ['id' => $news['id']])}}"> {{ $news['title'] }}</a><br></p>
+                    <p class="card-text">{{ $news['description'] }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">9 mins</small>
+                    <small class="text-muted">{{$news['author']}}</small>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        @empty
+            <p>Нет новостей</p>
+        @endforelse
         </div>
-    @endforeach
-</body>
-</html>
+    </div>
+</div>
+@endsection
+</main>

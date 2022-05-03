@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container w-50 pt-5">
-    <h2>Форма создания новости</h2>
+    <h2>Форма создания категории</h2>
     <form>
   <div class="mb-3">
     <label class="form-label">Название</label>
