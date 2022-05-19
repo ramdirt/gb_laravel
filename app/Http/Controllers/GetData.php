@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
-class NewsController extends Controller
+class GetData extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,6 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return view('admin.news.index');
     }
 
     /**
@@ -24,7 +23,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('admin.news.create');
+        return view('forms.get_data.create');
     }
 
     /**
@@ -35,12 +34,22 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
-            'title' => ['required', 'string']
+            'name' => 'required',
+            'mail' => 'required',
+            'phone' => 'required',
+            'text' => 'required',
         ]);
 
+        $name = $request->input('name');
+        $mail = $request->input('mail');
+        $phone = $request->input('phone');
+        $text = $request->input('text');
 
-        return response()->json($request->only(['title', 'author', 'status', 'description']), 201);
+        $line = $name . ' ' . $mail . ' ' . $phone . ' ' . $text;
+
+        Storage::put('get_data.txt', $line);
     }
 
     /**

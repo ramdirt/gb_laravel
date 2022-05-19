@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\GetData;
+use App\Http\Controllers\Feedback;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\AdminController;
@@ -25,6 +27,9 @@ Route::get('/', function () {
 Route::get('/about', function () {
     return view('about');
 });
+
+Route::resource('/feedback', Feedback::class);
+Route::resource('/get_data', GetData::class);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
