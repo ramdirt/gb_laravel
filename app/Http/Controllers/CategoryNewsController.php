@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryNewsController extends Controller
 {
     public function index()
     {
-        $categories = $this->getCategories();
+        $categories = DB::table('categories')->get();
         return view('news.categories.index', [
             'categories' => $categories
         ]);
@@ -16,9 +17,11 @@ class CategoryNewsController extends Controller
 
     public function show(int $id)
     {
-        $categories = $this->getCategories($id);
+        $titleCategory = DB::table('categories')->find($id)->title;
+        $newsList = DB::table('news')->where('category_id', '=', $id)->get();
         return view('news.categories.show', [
-            'category' => $categories
+            'titleCategory' => $titleCategory,
+            'newsList' => $newsList,
         ]);
     }
 }

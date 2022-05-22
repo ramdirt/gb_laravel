@@ -7,17 +7,14 @@
     <title>Document</title>
 </head>
 <body>
-        <h1>Новости категории: {{ $category['title'] }}</h1>
-            
+        <h1>Новости категории: {{ $titleCategory }}</h1>
+        
 
-        </div>
-
-            @foreach($category['news'] as $news)
+            @foreach($newsList as $news)
                 <div style="margin: 20px; padding: 10px; background-color: gray; width: 300px;"  >
-                    <img src="{{ $news['image'] }}" alt="" width="200"><br>
-                    <a href="{{ route('news.show', ['id' => $news['id']])}}"> {{ $news['title'] }}</a><br>
-                    <p>Автор {{$news['author']}}</p><br>
-                    <p>{{ $news['description'] }}</p>
+                    <p> {{ $news->title }}</p><br>
+                    <p>Автор {{$news->author}}</p><br>
+                    <p>{{ $news->description }}</p>
 
                 </div>
             @endforeach
