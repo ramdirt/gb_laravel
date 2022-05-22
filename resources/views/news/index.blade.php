@@ -7,13 +7,13 @@
         @forelse($newsList as $news)
             <div class="col">
             <div class="card shadow-sm">
-                <img src="{{ $news['image'] }}" alt="">
+                <img src="{{ $news->image }}" alt="">
                     <div class="card-body">
-                    <p><a href="{{ route('news.show', ['id' => $news['id']])}}"> {{ $news['title'] }}</a><br></p>
-                    <p class="card-text">{{ $news['description'] }}</p>
+                    <p><a href="{{ route('news.show', ['id' => $news->id])}}"> {{ $news->title }}</a><br></p>
+                    <p class="card-text">{{ $news->description }}</p>
                     <div class="d-flex justify-content-between align-items-center">
                     <small class="text-muted">9 mins</small>
-                    <small class="text-muted">{{$news['author']}}</small>
+                    <small class="text-muted">{{$news->author}}</small>
                     </div>
                 </div>
             </div>
