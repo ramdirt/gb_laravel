@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
-class Feedback extends Controller
+class FeedbackController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,6 +14,7 @@ class Feedback extends Controller
      */
     public function index()
     {
+        //
     }
 
     /**
@@ -23,7 +24,7 @@ class Feedback extends Controller
      */
     public function create()
     {
-        return view('forms.feedback.create');
+        //
     }
 
     /**
@@ -34,18 +35,7 @@ class Feedback extends Controller
      */
     public function store(Request $request)
     {
-
-        $request->validate([
-            'name' => 'required',
-            'feedback' => 'required',
-        ]);
-
-        $name = $request->input('name');
-        $feedback = $request->input('feedback');
-
-        $line = $name . ' ' . $feedback;
-
-        Storage::put('feedback.txt', $line);
+        //
     }
 
     /**

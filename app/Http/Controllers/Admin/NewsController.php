@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\News;
 use Illuminate\Http\Request;
+use App\Queries\QueryBuilderNews;
+use App\Http\Controllers\Controller;
 
 class NewsController extends Controller
 {
@@ -12,9 +14,11 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(QueryBuilderNews $news)
     {
-        return view('admin.news.index');
+        return view('admin.news.index', [
+            'newsList' => $news->getNews(),
+        ]);
     }
 
     /**
@@ -35,12 +39,15 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => ['required', 'string']
-        ]);
+        $validated = $request->only('title', 'description');
+        $category = new News($validated);
 
+        if ($category->save()) {
+            return redirect()->route('admin.news.index')
+                ->with('success', 'Запись успешно добавлена');
+        }
 
-        return response()->json($request->only(['title', 'author', 'status', 'description']), 201);
+        return back()->with('error', 'Ошибка добавления');
     }
 
     /**
@@ -60,9 +67,11 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(QueryBuilderNews $news, int $id)
     {
-        //
+        return view('admin.news.edit', [
+            'news' => $news->getNewsById($id)
+        ]);
     }
 
     /**
@@ -72,9 +81,18 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(QueryBuilderNews $news, Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required'
+        ]);
+
+        $news = $news->getNewsById($id);
+        $data = $request->all();
+        $news->update($data);
+
+        return back()->with('success', 'Данные обновлены');
     }
 
     /**
@@ -83,8 +101,10 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        //
+        News::find($id)->delete();
+
+        return redirect()->route('admin.news.index')->with('success', 'запись удалена');
     }
 }

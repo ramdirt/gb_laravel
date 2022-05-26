@@ -29,7 +29,6 @@ class CategoriesSeeder extends Seeder
             $title = $faker->jobTitle();
             $data[] = [
                 'title' => $title,
-                'slug' => Str::slug($title),
                 'description' => $faker->text(100)
             ];
         }

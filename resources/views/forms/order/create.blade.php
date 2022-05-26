@@ -7,7 +7,7 @@
 
     <div class="container mt-5">
 
-        <form method="post" action="{{ route('get_data.store') }}" enctype="multipart/form-data">
+        <form method="post" action="{{ route('order.store') }}" enctype="multipart/form-data">
             @csrf
             <label>Ваше имя</label>
             <input type="text" name="name" class="form-control mb-2" placeholder="Имя">
@@ -16,10 +16,10 @@
             <input type="text" name="phone" class="form-control mb-2" placeholder="Телефон">
 
             <label>Ваше почта</label>
-            <input type="text" name="mail" class="form-control mb-2" placeholder="Почта">
+            <input type="text" name="email" class="form-control mb-2" placeholder="Почта">
 
             <label>Что хотите</label>
-            <textarea class="form-control mb-2" name="text" rows="3" placeholder="Что хотите получить?"></textarea>
+            <textarea class="form-control mb-2" name="order" rows="3" placeholder="Что хотите получить?"></textarea>
 
             <button type="submit" class="btn btn-primary">Отправить</button>
 
