@@ -1,23 +1,23 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-<div class="container w-50 pt-5">
-    <h2>Форма создания новости</h2>
-    <form>
-  <div class="mb-3">
-    <label class="form-label">Название</label>
-    <input type="text" class="form-control" aria-describedby="emailHelp">
-  </div>
-<div class="mb-3">
-  <label class="form-label">Краткое описание</label>
-  <textarea class="form-control" rows="2"></textarea>
-</div>
+    <div class="container w-50 pt-5">
+        <h2>Форма создания категории</h2>
+        <form action="{{ route('admin.news.store') }}" method="post">
+            @csrf
+            @method('POST')
 
-<div class="mb-3">
-  <label class="form-label">Полное описание</label>
-  <textarea class="form-control" rows="5"></textarea>
-</div>
-  <button type="submit" class="btn btn-primary">Создать</button>
-</form>
-</div>
+            <div class="mb-3">
+                <label class="form-label">Название</label>
+                <input name="title" type="text" class="form-control" aria-describedby="emailHelp">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Краткое описание</label>
+                <textarea name="description" class="form-control" rows="2"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Создать</button>
+        </form>
+    </div>
 @endsection

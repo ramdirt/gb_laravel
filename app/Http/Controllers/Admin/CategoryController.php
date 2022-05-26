@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Queries\QueryBuilderCategories;
 
 class CategoryController extends Controller
 {
@@ -12,9 +14,11 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(QueryBuilderCategories $categories)
     {
-        return view('admin.categories.index');
+        return view('admin.categories.index', [
+            'categories' => $categories->getCategories(),
+        ]);
     }
 
     /**
@@ -24,7 +28,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categories.create');
     }
 
     /**
@@ -35,7 +39,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->only('title', 'description');
+        $category = new Category($validated);
+
+        if ($category->save()) {
+            return redirect()->route('admin.categories.index')
+                ->with('success', 'Запись успешно добавлена');
+        }
+
+        return back()->with('error', 'Ошибка добавления');
     }
 
     /**
@@ -55,9 +67,11 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(QueryBuilderCategories $categories, int $id)
     {
-        //
+        return view('admin.categories.edit', [
+            'category' => $categories->getCategoryById($id)
+        ]);
     }
 
     /**
@@ -67,9 +81,18 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(QueryBuilderCategories $categories, Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required'
+        ]);
+
+        $category = $categories->getCategoryById($id);
+        $data = $request->all();
+        $category->update($data);
+
+        return back()->with('success', 'Данные обновлены');
     }
 
     /**
@@ -78,8 +101,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        //
+        Category::find($id)->delete();
+
+        return redirect()->route('admin.categories.index')->with('success', 'запись удалена');
     }
 }

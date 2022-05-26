@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class GetData extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,7 +24,7 @@ class GetData extends Controller
      */
     public function create()
     {
-        return view('forms.get_data.create');
+        return view('forms.order.create');
     }
 
     /**
@@ -34,22 +35,22 @@ class GetData extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'name' => 'required',
-            'mail' => 'required',
+            'email' => 'required',
             'phone' => 'required',
-            'text' => 'required',
+            'order' => 'required',
         ]);
 
-        $name = $request->input('name');
-        $mail = $request->input('mail');
-        $phone = $request->input('phone');
-        $text = $request->input('text');
+        $validated = $request->only('name', 'email', 'phone', 'order');
+        $order = new Order($validated);
 
-        $line = $name . ' ' . $mail . ' ' . $phone . ' ' . $text;
+        if ($order->save()) {
+            return redirect()->route('home')
+                ->with('success', 'Запись успешно добавлена');
+        }
 
-        Storage::put('get_data.txt', $line);
+        return back()->with('error', 'Ошибка добавления');
     }
 
     /**

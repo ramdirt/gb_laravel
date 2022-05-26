@@ -5,11 +5,6 @@
 
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Список категорий</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-                <a class="btn btn-sm btn-outline-secondary" href="{{ route('admin.categories.create') }}">
-                    Добавить категорию
-                </a>
-            </div>
         </div>
 
         <div class="table-responsive">
@@ -17,21 +12,22 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Название</th>
-                        <th>Автор</th>
-                        <th>Дата добавления</th>
-                        <th>Действия</th>
+                        <th>Имя</th>
+                        <th>Почта</th>
+                        <th>Телефон</th>
+                        <th>Запрос</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($categories as $category)
+                    @forelse($orders as $order)
                         <tr>
-                            <td>{{ $category->id }}</td>
-                            <td>{{ $category->title }}</td>
-                            <td>{{ $category->description }}</td>
-                            <td>{{ $category->created_at }}</td>
+                            <td>{{ $order->id }}</td>
+                            <td>{{ $order->name }}</td>
+                            <td>{{ $order->email }}</td>
+                            <td>{{ $order->phone }}</td>
+                            <td>{{ $order->order }}</td>
                             <td>
-                                <x-action route="admin.categories" value="{{ $category->id }}" />
+                                <x-action route="admin.order" value="{{ $order->id }}" />
                             </td>
                         </tr>
                     @empty

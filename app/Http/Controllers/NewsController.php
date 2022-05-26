@@ -3,23 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Queries\QueryBuilderNews;
 use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
 {
-    public function index()
+    public function index(QueryBuilderNews $news)
     {
-        $news = DB::table('news')->get();
         return view('news.index', [
-            'newsList' => $news
+            'newsList' => $news->getNews()
         ]);
     }
 
-    public function show(int $id)
+    public function show(QueryBuilderNews $news, int $id)
     {
-        $news = DB::table('news')->find($id);
         return view('news.show', [
-            'news' => $news
+            'news' => $news->getNewsById($id)
         ]);
     }
 }
