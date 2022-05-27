@@ -4,7 +4,7 @@
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Список категорий</h1>
+            <h1 class="h2">Список отзывов</h1>
         </div>
 
         <div class="table-responsive">
@@ -12,22 +12,19 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Название</th>
                         <th>Имя</th>
-                        <th>Почта</th>
-                        <th>Телефон</th>
-                        <th>Запрос</th>
+                        <th>Сообщение</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($orders as $order)
+                    @forelse($feedbackList as $feedback)
                         <tr>
-                            <td>{{ $order->id }}</td>
-                            <td>{{ $order->name }}</td>
-                            <td>{{ $order->email }}</td>
-                            <td>{{ $order->phone }}</td>
-                            <td>{{ $order->order }}</td>
+                            <td>{{ $feedback->id }}</td>
+                            <td>{{ $feedback->name }}</td>
+                            <td>{{ $feedback->feedback }}</td>
                             <td>
-                                <x-action route="admin.order" value="{{ $order->id }}" />
+                                <x-action route="admin.feedback" value="{{ $feedback->id }}" />
                             </td>
                         </tr>
                     @empty

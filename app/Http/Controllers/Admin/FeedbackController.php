@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Feedback;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Queries\QueryBuilderFeedback;
 
 class FeedbackController extends Controller
 {
@@ -12,9 +14,11 @@ class FeedbackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(QueryBuilderFeedback $feedback)
     {
-        //
+        return view('admin.feedback.index', [
+            'feedbackList' => $feedback->getFeedback(),
+        ]);
     }
 
     /**
@@ -80,6 +84,8 @@ class FeedbackController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Feedback::find($id)->delete();
+
+        return redirect()->route('admin.feedback.index')->with('success', 'запись удалена');
     }
 }

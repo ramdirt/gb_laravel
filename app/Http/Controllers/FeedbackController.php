@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class FeedbackController extends Controller
 {
-    public function index()
+    public function create()
     {
         return view('forms.feedback.create');
     }
