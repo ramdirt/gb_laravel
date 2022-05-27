@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Queries\QueryBuilderOrders;
 use App\Http\Controllers\Controller;
@@ -83,6 +84,8 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Order::find($id)->delete();
+
+        return redirect()->route('admin.order.index')->with('success', 'запись удалена');
     }
 }
