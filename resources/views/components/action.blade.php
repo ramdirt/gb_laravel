@@ -1,12 +1,12 @@
 <div class="row">
-    <div class="col">
-        <a href="{{ route($route . '.edit', $value) }}">Ред.</a>
+    <div class="col-sm">
+        <a class="" href="{{ route($route . '.edit', $value) }}">Ред.</a>
     </div>
-    <div class="col">
+    <div class="col-sm">
         <form action="{{ route($route . '.destroy', $value) }}" method="post">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn btn-sm btn-danger">
+            <button class="" type="submit">
                 X
             </button>
         </form>

@@ -18,8 +18,7 @@
                     <tr>
                         <th>#</th>
                         <th>Название</th>
-                        <th>Автор</th>
-                        <th>Дата добавления</th>
+                        <th>Описание</th>
                         <th>Действия</th>
                     </tr>
                 </thead>
@@ -29,7 +28,6 @@
                             <td>{{ $category->id }}</td>
                             <td>{{ $category->title }}</td>
                             <td>{{ $category->description }}</td>
-                            <td>{{ $category->created_at }}</td>
                             <td>
                                 <x-action route="admin.categories" value="{{ $category->id }}" />
                             </td>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Feedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StoreFeedbackRequest;
 
 class FeedbackController extends Controller
 {
@@ -13,19 +14,15 @@ class FeedbackController extends Controller
         return view('forms.feedback.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreFeedbackRequest $request)
     {
 
-        $request->validate([
-            'name' => 'required',
-            'feedback' => 'required',
-        ]);
-
-        $validate = $request->only('name', 'feedback');
+        $validate = $request->validated();
         $feedback = new Feedback($validate);
 
         if ($feedback->save()) {
-            return redirect()->route('home')->with('success', 'Данные отправлены');
+            return redirect()->route('home')
+                ->with('success', 'Данные отправлены');
         }
 
         return back()->with('error', 'Ошибка добавления');

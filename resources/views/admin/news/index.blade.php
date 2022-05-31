@@ -19,6 +19,7 @@
                         <th>#</th>
                         <th>Название</th>
                         <th>Автор</th>
+                        <th>Статус</th>
                         <th>Дата добавления</th>
                         <th>Действия</th>
                     </tr>
@@ -28,10 +29,15 @@
                         <tr>
                             <td>{{ $news->id }}</td>
                             <td>{{ $news->title }}</td>
-                            <td>{{ $news->description }}</td>
-                            <td>{{ $news->created_at }}</td>
+                            <td>{{ $news->author }}</td>
+                            <td>{{ $news->status }}</td>
                             <td>
-                                <x-action route="admin.categories" value="{{ $news->id }}" />
+                                @if ($news->created_at)
+                                    {{ $news->created_at->format('d-m H:i') }}
+                                @endif
+                            </td>
+                            <td>
+                                <x-action route="admin.news" value="{{ $news->id }}" />
                             </td>
                         </tr>
                     @empty
@@ -39,6 +45,9 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+        <div class="card-footer clearfix">
+            {{ $newsList->links() }}
         </div>
     </main>
 @endsection

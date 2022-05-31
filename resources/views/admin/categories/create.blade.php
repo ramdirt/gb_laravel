@@ -9,12 +9,20 @@
 
             <div class="mb-3">
                 <label class="form-label">Название</label>
-                <input name="title" type="text" class="form-control" aria-describedby="emailHelp">
+                <input name="title" type="text" class="form-control" value="{{ old('title') }}">
+
+                @error('title')
+                    <strong style="color:red">{{ $message }}</strong>
+                @enderror
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Краткое описание</label>
-                <textarea name="description" class="form-control" rows="2"></textarea>
+                <textarea name="description" class="form-control" rows="2">{{ old('description') }}</textarea>
+
+                @error('description')
+                    <strong style="color:red">{{ $message }}</strong>
+                @enderror
             </div>
 
             <button type="submit" class="btn btn-primary">Создать</button>
