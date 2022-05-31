@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\News;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Queries\QueryBuilderNews;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreNewsRequest;
+use App\Queries\QueryBuilderCategories;
+use App\Http\Requests\UpdateNewsRequest;
 
 class NewsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(QueryBuilderNews $news)
     {
         return view('admin.news.index', [
@@ -21,25 +20,19 @@ class NewsController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function create(QueryBuilderCategories $categories)
     {
-        return view('admin.news.create');
+        return view('admin.news.create', [
+            'categories' => $categories->getCategories(),
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(StoreNewsRequest $request)
     {
-        $validated = $request->only('title', 'description');
+        $validated = $request->validated();
+        $validated['slug'] = Str::slug($validated['title']);
         $category = new News($validated);
 
         if ($category->save()) {
@@ -50,60 +43,42 @@ class NewsController extends Controller
         return back()->with('error', 'Ошибка добавления');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(QueryBuilderNews $news, int $id)
+
+    public function edit(QueryBuilderNews $news, QueryBuilderCategories $categories, int $id)
     {
         return view('admin.news.edit', [
-            'news' => $news->getNewsById($id)
+            'news' => $news->getNewsById($id),
+            'categories' => $categories->getCategories()
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(QueryBuilderNews $news, Request $request, $id)
+
+    public function update(UpdateNewsRequest $request, News $news)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required'
-        ]);
 
-        $news = $news->getNewsById($id);
-        $data = $request->all();
-        $news->update($data);
+        $validated = $request->validated();
+        $validated['slug'] = Str::slug($validated['title']);
 
-        return back()->with('success', 'Данные обновлены');
+        $news = $news->fill($validated);
+
+        if ($news->save()) {
+            return redirect()->route('admin.news.index')
+                ->with('success', 'Запись успешно обновлена');
+        }
+
+        return back()->with('error', 'Ошибка обновления');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(int $id)
     {
-        News::find($id)->delete();
+        News::destroy($id);
 
         return redirect()->route('admin.news.index')->with('success', 'запись удалена');
     }

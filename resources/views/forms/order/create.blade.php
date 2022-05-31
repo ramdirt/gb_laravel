@@ -9,17 +9,42 @@
 
         <form method="post" action="{{ route('order.store') }}" enctype="multipart/form-data">
             @csrf
-            <label>Ваше имя</label>
-            <input type="text" name="name" class="form-control mb-2" placeholder="Имя">
+            <div class="form-group">
+                <label>Ваше имя</label>
+                <input type="text" name="name" class="form-control mb-2" placeholder="Имя" value="{{ old('name') }}">
+                @error('name')
+                    <strong style="color:red">{{ $message }}</strong>
+                @enderror
+            </div>
 
-            <label>Ваш телефон</label>
-            <input type="text" name="phone" class="form-control mb-2" placeholder="Телефон">
+            <div class="form-group">
+                <label>Ваш телефон</label>
+                <input type="text" name="phone" class="form-control mb-2" placeholder="Телефон" value="{{ old('phone') }}">
 
-            <label>Ваше почта</label>
-            <input type="text" name="email" class="form-control mb-2" placeholder="Почта">
+                @error('phone')
+                    <strong style="color:red">{{ $message }}</strong>
+                @enderror
+            </div>
 
-            <label>Что хотите</label>
-            <textarea class="form-control mb-2" name="order" rows="3" placeholder="Что хотите получить?"></textarea>
+            <div class="form-group">
+
+                <label>Ваше почта</label>
+                <input type="text" name="email" class="form-control mb-2" placeholder="Почта" value="{{ old('email') }}">
+
+                @error('email')
+                    <strong style="color:red">{{ $message }}</strong>
+                @enderror
+
+            </div>
+            <div class="form-group">
+                <label>Что хотите</label>
+                <textarea class="form-control mb-2" name="order" rows="3"
+                    placeholder="Что хотите получить?">{{ old('order') }}</textarea>
+
+                @error('order')
+                    <strong style="color:red">{{ $message }}</strong>
+                @enderror
+            </div>
 
             <button type="submit" class="btn btn-primary">Отправить</button>
 

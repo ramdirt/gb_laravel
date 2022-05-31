@@ -10,11 +10,19 @@
             @csrf
             <label>Ваше имя</label>
             <input type="text" name="name" class="form-control mb-2" placeholder="Введите имя" value="{{ old('name') }}">
+
+            @error('name')
+                <strong style="color:red">{{ $message }}</strong>
+            @enderror
+
             <label>Отзыв</label>
             <textarea name="feedback" placeholder="Ваш отзыв" class="form-control mb-2" rows="3"
                 value="{{ old('feedback') }}"></textarea>
-            <button type="submit class=" btn btn-primary">Отправить</button>
+            <button type="submit class="      btn btn-primary">Отправить</button>
 
+            @error('feedback')
+                <strong style="color:red">{{ $message }}</strong>
+            @enderror
         </form>
     </div>
 @endsection

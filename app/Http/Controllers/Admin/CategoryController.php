@@ -5,15 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateRequest;
 use App\Queries\QueryBuilderCategories;
+use App\Http\Requests\StoreCategoriesRequest;
+use App\Http\Requests\UpdateCategoriesRequest;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(QueryBuilderCategories $categories)
     {
         return view('admin.categories.index', [
@@ -21,25 +19,16 @@ class CategoryController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         return view('admin.categories.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(StoreCategoriesRequest $request)
     {
-        $validated = $request->only('title', 'description');
+        $validated = $request->validated();
         $category = new Category($validated);
 
         if ($category->save()) {
@@ -50,23 +39,13 @@ class CategoryController extends Controller
         return back()->with('error', 'Ошибка добавления');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(QueryBuilderCategories $categories, int $id)
     {
         return view('admin.categories.edit', [
@@ -74,36 +53,24 @@ class CategoryController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(QueryBuilderCategories $categories, Request $request, $id)
+
+    public function update(Category $category, UpdateCategoriesRequest $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required'
-        ]);
+        $validated = $request->validated();
+        $category = $category->fill($validated);
 
-        $category = $categories->getCategoryById($id);
-        $data = $request->all();
-        $category->update($data);
+        if ($category->save()) {
+            return redirect()->route('admin.categories.index')
+                ->with('success', 'Запись успешно обновлена');
+        }
 
-        return back()->with('success', 'Данные обновлены');
+        return back()->with('error', 'Ошибка обновления');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(int $id)
     {
-        Category::find($id)->delete();
+        Category::destroy($id);
 
         return redirect()->route('admin.categories.index')->with('success', 'запись удалена');
     }
