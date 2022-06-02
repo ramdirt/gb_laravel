@@ -2,7 +2,7 @@
 
 <body>
     @include('layouts.nav')
-    <main>
+    <main class="mt-3">
         @yield('content')
     </main>
     @include('layouts.footer')

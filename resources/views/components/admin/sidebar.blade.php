@@ -31,6 +31,12 @@
                         Обратная связь
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ route('admin.users.index') }}">
+                        Пользователи
+                    </a>
+                </li>
+
                 <x-alert />
             </ul>
         </div>
