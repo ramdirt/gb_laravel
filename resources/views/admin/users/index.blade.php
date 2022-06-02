@@ -15,27 +15,19 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Название</th>
-                    <th>Автор</th>
-                    <th>Статус</th>
+                    <th>Имя</th>
+                    <th>Роль</th>
                     <th>Дата добавления</th>
-                    <th>Действия</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse($newsList as $news)
+                @forelse($users as $user)
                     <tr>
-                        <td>{{ $news->id }}</td>
-                        <td>{{ $news->title }}</td>
-                        <td>{{ $news->author }}</td>
-                        <td>{{ $news->status }}</td>
+                        <td>{{ $user->id }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->is_admin }}</td>
                         <td>
-                            @if ($news->created_at)
-                                {{ $news->created_at->format('d-m H:i') }}
-                            @endif
-                        </td>
-                        <td>
-                            <x-action route="admin.news" value="{{ $news->id }}" />
+                            <x-action route="admin.users" value="{{ $user->id }}" />
                         </td>
                     </tr>
                 @empty
@@ -43,8 +35,5 @@
                 @endforelse
             </tbody>
         </table>
-    </div>
-    <div class="card-footer clearfix">
-        {{ $newsList->links() }}
     </div>
 @endsection

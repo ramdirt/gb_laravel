@@ -2,16 +2,18 @@
 
 use App\Http\Controllers\GetData;
 use App\Http\Controllers\Feedback;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\FeedbackController as AdminFeedbackController;
-use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +26,9 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Auth::routes();
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/about', function () {
     return view('about');
@@ -49,10 +51,11 @@ Route::get('/news/{id}', [NewsController::class, 'show'])->where('id', '\d+')
     ->name('news.show');
 
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
     Route::resource('/categories', AdminCategoryController::class);
     Route::resource('/news', AdminNewsController::class);
     Route::resource('/feedback', AdminFeedbackController::class);
     Route::resource('/order', AdminOrderController::class);
+    Route::resource('/users', UserController::class);
 });

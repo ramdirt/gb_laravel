@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Database\Seeders\NewsSeeder;
+use Database\Seeders\UserSeeder;
 use Database\Seeders\CategoriesSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
             CategoriesSeeder::class,
             NewsSeeder::class,
             SourcesSeeder::class,
+            UserSeeder::class
         ]);
     }
 }
