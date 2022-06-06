@@ -168,7 +168,7 @@ return [
          * Package Service Providers...
          */
         Barryvdh\Debugbar\ServiceProvider::class,
-
+        Orchestra\Parser\XmlServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -193,6 +193,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'XmlParser' => Orchestra\Parser\Xml\Facade::class,
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 

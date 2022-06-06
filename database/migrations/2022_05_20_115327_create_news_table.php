@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->integer('category_id');
             $table->string('title', 255);
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('author')->default('admin');
             $table->enum('status', ['DRAFT', 'ACTIVE', 'BLOCKED'])
                 ->default('DRAFT');

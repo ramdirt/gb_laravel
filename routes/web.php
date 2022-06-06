@@ -6,10 +6,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SocialController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
@@ -58,4 +60,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
     Route::resource('/feedback', AdminFeedbackController::class);
     Route::resource('/order', AdminOrderController::class);
     Route::resource('/users', UserController::class);
+    Route::get('/parser', ParserController::class)->name('parser');
+});
+
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/auth/{driver}/redirect', [SocialController::class, 'redirect'])
+        ->where('driver', '\w+')
+        ->name('social.redirect');
+    Route::any('/auth/{driver}/callback', [SocialController::class, 'callback'])
+        ->where('driver', '\w+')
+        ->name('social.callback');
 });
