@@ -66,3 +66,17 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        console.log('log')
+    </script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#description'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+@endpush

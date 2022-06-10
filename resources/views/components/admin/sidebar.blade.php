@@ -17,8 +17,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">
-                        Загрузки
+                    <a class="nav-link" aria-current="page" href="{{ route('admin.resources.index') }}">
+                        Источники парсинга
                     </a>
                 </li>
                 <li class="nav-item">
