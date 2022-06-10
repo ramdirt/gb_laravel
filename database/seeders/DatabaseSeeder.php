@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Resources;
 use Illuminate\Database\Seeder;
 use Database\Seeders\NewsSeeder;
 use Database\Seeders\UserSeeder;
@@ -21,7 +22,8 @@ class DatabaseSeeder extends Seeder
             CategoriesSeeder::class,
             NewsSeeder::class,
             SourcesSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            Resources::class
         ]);
     }
 }

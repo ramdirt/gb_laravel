@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\GetData;
-use App\Http\Controllers\Feedback;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
@@ -9,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\Admin\NewsResources;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ParserController;
@@ -60,6 +59,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
     Route::resource('/feedback', AdminFeedbackController::class);
     Route::resource('/order', AdminOrderController::class);
     Route::resource('/users', UserController::class);
+    Route::resource('/resources', NewsResources::class);
     Route::get('/parser', ParserController::class)->name('parser');
 });
 
