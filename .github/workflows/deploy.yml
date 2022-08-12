@@ -19,10 +19,12 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    # установка ключа    
+    # установка ключа
+    - name: setup key
     - run: |
         set -eu
         mkdir "$HOME/.ssh"
         echo "${{ secrets.key }}" > "$HOME/.ssh/key"
         chmod 600 "$HOME/.ssh/key"
         echo "hello world"
+    - run: composer i
