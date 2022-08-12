@@ -27,4 +27,4 @@ jobs:
         echo "${{ secrets.key }}" > "$HOME/.ssh/key"
         chmod 600 "$HOME/.ssh/key"
         echo "hello world"
-    - run: composer i
+    - run: composer install
