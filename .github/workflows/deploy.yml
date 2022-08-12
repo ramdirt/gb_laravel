@@ -20,11 +20,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     # установка ключа
-    - name: setup key
-    - run: |
-        set -eu
-        mkdir "$HOME/.ssh"
-        echo "${{ secrets.key }}" > "$HOME/.ssh/key"
-        chmod 600 "$HOME/.ssh/key"
-        echo "hello world"
+    - run: set -eu
+    - run: mkdir "$HOME/.ssh"
+    - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
+    - run: chmod 600 "$HOME/.ssh/key"
+    - run: echo "hello world"
     - run: composer install
