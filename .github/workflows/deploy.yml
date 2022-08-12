@@ -26,6 +26,11 @@ jobs:
         mkdir "$HOME/.ssh"
         echo "${{ secrets.key }}" > "$HOME/.ssh/key"
         chmod 600 "$HOME/.ssh/key"
+        
+    # установка зависимостей 
+    - run: |
+        composer update --ignore-platform-req=php+ -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        npm ci
     
     # замена переменных окружения
     - run: |
@@ -36,10 +41,5 @@ jobs:
         sed -i "s/DB_USERNAME=laravel/DB_CONNECTION=${{ secrets.db_login }}/" .env
         sed -i "s/DB_PASSWORD=laravel/DB_CONNECTION=${{ secrets.db_password }}/" .env
         
-    # установка зависимостей 
-    - run: |
-        composer update --ignore-platform-req=php+ -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-        npm ci
-
     # синхронизация файлов с хостингом
     - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . "${{ secrets.login }}@${{ secrets.host }}:${{ secrets.path_site }}" --exclude node_modules/
