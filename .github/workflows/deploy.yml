@@ -28,3 +28,5 @@ jobs:
     - run: composer update --ignore-platform-req=php+ -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - run: php artisan key:generate
+    - run: npm ci
+    - run: npm run
