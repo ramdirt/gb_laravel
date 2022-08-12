@@ -24,10 +24,9 @@ jobs:
     - run: mkdir "$HOME/.ssh"
     - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
     - run: chmod 600 "$HOME/.ssh/key"
-    - run: echo "hello world"
     - run: composer update --ignore-platform-req=php+ -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - run: php artisan key:generate
     - run: npm ci
     - run: npm run
-    - run: ls
+    - run: ls -al
