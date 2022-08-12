@@ -24,4 +24,4 @@ jobs:
     - run: mkdir "$HOME/.ssh"
     - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
     - run: chmod 600 "$HOME/.ssh/key"
-    - run: cat "$HOME/.ssh/key"
+    - run: cat "${{ secrets.key }}"
