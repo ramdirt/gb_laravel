@@ -33,4 +33,4 @@ jobs:
     - run: |
         sed -i "s/DB_CONNECTION=mysql/DB_CONNECTION=${{ secrets.db_host }}/" .env
     - run: cat .env
-    - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . "${{ secrets.login }}@${{ secrets.host }}:${{ secrets.path }}"
+    - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . "${{ secrets.login }}@${{ secrets.host }}:${{ secrets.path_site }}"
