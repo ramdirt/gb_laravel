@@ -22,6 +22,6 @@ jobs:
     # установка ключа    
     - run: set -eu
     - run: mkdir "$HOME/.ssh"
-    - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
+    - run: echo "${{ secrets.SSH_KEY }}" > "$HOME/.ssh/key"
     - run: chmod 600 "$HOME/.ssh/key"
-    - run: cat "${{ secrets.key }}"
+    - run: cat "${{ secrets.SSH_KEY }}"
