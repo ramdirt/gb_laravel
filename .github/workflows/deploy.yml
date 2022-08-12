@@ -25,4 +25,4 @@ jobs:
     - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
     - run: chmod 600 "$HOME/.ssh/key"
     - run: echo "hello world"
-    - run: composer install
+    - run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
