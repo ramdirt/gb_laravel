@@ -37,7 +37,7 @@ jobs:
         sed -i "s/DB_PASSWORD=laravel/DB_CONNECTION=${{ secrets.db_password }}/" .env
         
     # установка зависимостей 
-    - run: 
+    - run: |
         composer update --ignore-platform-req=php+ -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
         npm ci
 
