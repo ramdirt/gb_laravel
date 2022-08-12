@@ -28,9 +28,9 @@ jobs:
     - run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - run: php artisan key:generate
     - run: npm ci
-    - run: npm run
+    - run: npm run build
     - run: cat .env
     - run: |
         sed -i "s/DB_CONNECTION=mysql/DB_CONNECTION=${{ secrets.db_host }}/" .env
     - run: cat .env
-    - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . "${{ secrets.login }}@${{ secrets.host }}:${{ secrets.path_site }}"
+    - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . "${{ secrets.login }}@${{ secrets.host }}:${{ secrets.path_site }}" --exclude node_modules/
