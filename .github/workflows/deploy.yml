@@ -25,4 +25,4 @@ jobs:
         mkdir "$HOME/.ssh"
         echo "${{ secrets.key }}" > "$HOME/.ssh/key"
         chmod 600 "$HOME/.ssh/key"
-        cat "${{ secrets.key }}"
+        echo "hello world"
