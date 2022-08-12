@@ -31,3 +31,7 @@ jobs:
     - run: npm run
     - run: ls -al
     - run: cat .env
+    - env:
+        DB_CONNECTION: lfqegfeqrgeqgr
+        DB_DATABASE: qergeqgerg
+    - run: cat .env
