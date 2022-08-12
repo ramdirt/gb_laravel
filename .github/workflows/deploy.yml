@@ -29,7 +29,7 @@ jobs:
     - run: php artisan key:generate
     - run: npm ci
     - run: npm run
-      env:
-        DB_CONNECTION: lfqegfeqrgeqgr
-        DB_DATABASE: qergeqgerg
+    - run: cat .env
+    - run: |
+        sed -i "s/DB_CONNECTION=mysql/DB_CONNECTION=${{ secrets.db_host }}/g" .env
     - run: cat .env
