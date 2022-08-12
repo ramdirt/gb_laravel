@@ -26,4 +26,5 @@ jobs:
     - run: chmod 600 "$HOME/.ssh/key"
     - run: echo "hello world"
     - run: composer update --ignore-platform-reqs -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    - run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - run: php artisan key:generate
